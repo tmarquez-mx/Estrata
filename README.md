@@ -68,8 +68,9 @@ El prototipo es una prueba de concepto para presentar la idea, reunir equipo y c
 
 ---
 
-## Cómo abrir el prototipo
+## Cómo navegar el prototipo
 
+[**clic aquí**](https://claude.ai/public/artifacts/99928d7d-07d5-4b40-a62c-9a0bf131d92e)
 No requiere instalación. Es un archivo HTML autónomo que funciona sin internet y sin dependencias externas.
 
 1. Descarga `estrata-prototipo.html`.
