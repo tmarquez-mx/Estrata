@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Estrata · prototipo</title>
+<style>
+  :root{
+    --paper:#FBFAF7; --card:#FFFFFF; --soft:#F3F1EA;
+    --ink:#2B3A42; --ink-2:#5C6B73; --ink-3:#95A0A6;
+    --line:rgba(43,58,66,.12); --line-2:rgba(43,58,66,.24);
+    --teal:#2E9E88;
+    --c1-t:#185FA5; --c1-bg:#E6F1FB; --c1-bd:#85B7EB;
+    --c2-t:#8A5406; --c2-bg:#FAEEDA; --c2-bd:#E7A63C;
+    --c3-t:#3B6D11; --c3-bg:#EAF3DE; --c3-bd:#9CC65C;
+    --radius:8px;
+    --serif:Georgia,"Iowan Old Style","Times New Roman",serif;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  }
+  @media(prefers-color-scheme:dark){
+    :root{
+      --paper:#14181A; --card:#1B2124; --soft:#222A2D;
+      --ink:#E7ECEE; --ink-2:#A7B2B7; --ink-3:#6D797E;
+      --line:rgba(255,255,255,.12); --line-2:rgba(255,255,255,.24);
+      --teal:#4FBFA6;
+      --c1-t:#9CC6F2; --c1-bg:#12314C; --c1-bd:#2E6FA8;
+      --c2-t:#F0C079; --c2-bg:#3A2C10; --c2-bd:#8A6320;
+      --c3-t:#B7DE8A; --c3-bg:#213410; --c3-bd:#4E7A1E;
+    }
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;}
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:780px;margin:0 auto;padding:28px 18px 60px;}
+
+  .site{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px;}
+  .brand{display:flex;align-items:center;gap:12px;}
+  .brand-word{font-family:var(--serif);font-size:26px;line-height:1;color:var(--ink);}
+  .brand-sub{font-size:12px;color:var(--ink-2);margin-top:4px;}
+  .brand-rule{width:26px;height:2px;background:var(--teal);margin-top:6px;border-radius:2px;}
+  .live{font-size:11px;color:var(--teal);border:0.5px solid var(--teal);border-radius:20px;padding:3px 10px;}
+  .help{font-size:12px;color:var(--ink-3);margin:2px 0 18px;}
+
+  .card{background:var(--card);border:0.5px solid var(--line);border-radius:14px;overflow:hidden;}
+  .masthead{padding:20px 22px 18px;border-bottom:0.5px solid var(--line);}
+  .collection{font-size:11px;color:var(--ink-3);margin-bottom:8px;}
+  .art-title{font-family:var(--serif);font-size:26px;line-height:1.22;color:var(--ink);margin-bottom:14px;}
+  .byline{display:flex;align-items:center;gap:11px;}
+  .avatar{width:36px;height:36px;border-radius:50%;background:var(--c1-bg);color:var(--c1-t);font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .by-name{font-size:14px;color:var(--ink);}
+  .by-aff{font-size:12px;color:var(--ink-2);}
+  .keywords{font-size:11px;color:var(--ink-3);margin-top:11px;}
+
+  .tabs{display:flex;gap:7px;padding:14px 22px 6px;}
+  .tab{flex:1;font-size:12px;padding:8px;border-radius:var(--radius);border:0.5px solid var(--line);background:transparent;color:var(--ink-2);cursor:pointer;font-family:var(--sans);transition:background .15s,border-color .15s,color .15s;}
+  .tab:active{transform:scale(.98);}
+  .metaline{display:flex;align-items:center;justify-content:space-between;padding:4px 22px 10px;font-size:11px;color:var(--ink-3);}
+
+  #pane{position:relative;overflow:hidden;min-height:430px;border-top:3px solid var(--c1-bd);background:var(--c1-bg);transition:background-color .5s ease;}
+  #content{position:relative;z-index:1;padding:18px 22px;}
+  #content p{font-size:14px;line-height:1.75;color:var(--ink);margin:0 0 12px;}
+  #content p:last-child{margin-bottom:0;}
+  #content .eyebrow{font-size:11px;margin-bottom:10px;}
+  #wipe{position:absolute;inset:0;z-index:2;transform:translateX(-101%);}
+  #float{position:absolute;display:none;z-index:5;font-size:11px;padding:5px 11px;border-radius:var(--radius);border:0.5px solid var(--line-2);background:var(--card);color:var(--ink);cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.14);font-family:var(--sans);}
+
+  .figrow{display:flex;align-items:center;gap:10px;margin:2px 0 10px;}
+  .figrow label{font-size:12px;color:var(--ink-2);min-width:80px;}
+  .figout{font-size:12px;font-weight:600;min-width:34px;text-align:right;}
+  .figcap{font-size:11px;color:var(--ink-3);margin:0 0 14px;}
+  pre{font-size:12px;font-family:var(--mono);color:var(--ink-2);background:var(--soft);border:0.5px solid var(--line);border-radius:var(--radius);padding:11px;line-height:1.6;overflow-x:auto;margin:0 0 12px;}
+
+  .annots{padding:16px 22px;border-top:0.5px solid var(--line);background:var(--soft);}
+  .annots-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:3px;}
+  .annots-head b{font-size:13px;font-weight:600;}
+  .annots-hint{font-size:11px;color:var(--ink-3);margin-bottom:12px;}
+  .acard{border:0.5px solid var(--line);border-radius:var(--radius);padding:11px 12px;margin-bottom:9px;background:var(--card);}
+  .lchip{font-size:10px;border-radius:var(--radius);padding:2px 8px;display:inline-block;margin-bottom:6px;}
+  .aquote{font-size:12px;line-height:1.5;color:var(--ink);margin:0 0 8px;padding-left:8px;}
+  .acard textarea{width:100%;min-height:46px;font-size:12px;font-family:var(--sans);color:var(--ink);background:var(--card);border:0.5px solid var(--line);border-radius:var(--radius);padding:7px 9px;resize:vertical;margin-bottom:8px;outline:none;}
+  .acard textarea:focus{border-color:var(--c1-bd);}
+  .aurl{display:flex;align-items:center;gap:6px;font-size:10px;color:var(--ink-3);font-family:var(--mono);margin-bottom:9px;overflow:hidden;}
+  .aurl span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+
+  .btn{font-size:11px;padding:6px 11px;border-radius:var(--radius);border:0.5px solid var(--line-2);background:var(--card);color:var(--ink);cursor:pointer;font-family:var(--sans);display:inline-flex;align-items:center;gap:6px;transition:background .15s;}
+  .btn:hover{background:var(--soft);}
+  .btn svg{width:13px;height:13px;flex-shrink:0;}
+
+  .foot{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 22px;border-top:0.5px solid var(--line);font-size:11px;color:var(--ink-3);flex-wrap:wrap;}
+  .doi{background:var(--soft);border-radius:var(--radius);padding:2px 9px;}
+
+  input[type=range]{-webkit-appearance:none;appearance:none;height:4px;border-radius:4px;background:var(--line-2);outline:none;flex:1;}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:16px;height:16px;border-radius:50%;background:var(--teal);cursor:pointer;border:2px solid var(--card);}
+  input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--teal);cursor:pointer;border:2px solid var(--card);}
+
+  #toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:var(--paper);font-size:12px;padding:9px 16px;border-radius:22px;opacity:0;transition:opacity .25s,transform .25s;pointer-events:none;z-index:50;}
+  #toast.on{opacity:1;transform:translateX(-50%) translateY(0);}
+
+  .fn{font-size:11px;color:var(--ink-3);text-align:center;margin:14px 4px 0;}
+
+  @media(max-width:600px){.art-title{font-size:20px;}.tabs{flex-wrap:wrap;}.tab{flex:1 1 30%;}}
+  @media(prefers-reduced-motion:reduce){#pane{transition:none;}#wipe{display:none!important;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="site">
+    <div class="brand">
+      <svg width="34" height="30" viewBox="0 0 34 30" aria-hidden="true">
+        <path d="M4 20 L17 26 L30 20 L17 14 Z" fill="none" stroke="var(--ink-3)" stroke-width="1.5" stroke-linejoin="round"/>
+        <path d="M4 14 L17 20 L30 14 L17 8 Z" fill="var(--soft)" stroke="var(--ink-2)" stroke-width="1.5" stroke-linejoin="round"/>
+        <path d="M4 8 L17 14 L30 8 L17 2 Z" fill="var(--card)" stroke="var(--ink)" stroke-width="1.5" stroke-linejoin="round"/>
+        <rect x="19" y="6" width="7" height="2" rx="1" fill="var(--teal)"/>
+      </svg>
+      <div>
+        <div class="brand-word">Estrata</div>
+        <div class="brand-sub">escritura académica en capas</div>
+        <div class="brand-rule"></div>
+      </div>
+    </div>
+    <span class="live">● documento vivo</span>
+  </div>
+  <div class="help">Prototipo navegable v0.1 — Cambia de capa, mueve el control de la figura y selecciona cualquier frase para anotarla y exportarla a Obsidian.</div>
+
+  <article class="card">
+    <div class="masthead">
+      <div class="collection">manual de vibe coding · capítulo 3</div>
+      <div class="art-title">Especificidad del prompt: cómo cambia lo que obtienes de una IA</div>
+      <div class="byline">
+        <span class="avatar">AH</span>
+        <div>
+          <div class="by-name">Ana Herrera</div>
+          <div class="by-aff">Instituto de Humanidades Digitales · 31 jul 2026</div>
+        </div>
+      </div>
+      <div class="keywords">palabras clave: humanidades digitales · inteligencia artificial · pedagogía</div>
+    </div>
+
+    <div class="tabs" role="tablist" aria-label="capas del artículo">
+      <button class="tab" id="b-nar" role="tab" aria-selected="true">● narrativa</button>
+      <button class="tab" id="b-her" role="tab" aria-selected="false">● hermenéutica</button>
+      <button class="tab" id="b-dat" role="tab" aria-selected="false">● datos</button>
+    </div>
+    <div class="metaline">
+      <span>¶ 6 de 12</span>
+      <span>selecciona texto para anotar</span>
+    </div>
+
+    <div id="pane">
+      <div id="content"></div>
+      <div id="wipe"></div>
+      <button id="float">✎ anotar</button>
+    </div>
+
+    <div class="annots">
+      <div class="annots-head">
+        <b>anotaciones (<span id="acount">1</span>)</b>
+        <button class="btn" id="exp-all">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M8 11l4 4 4-4"/><path d="M4 19h16"/></svg>
+          exportar todas
+        </button>
+      </div>
+      <div class="annots-hint">cada anotación guarda la url de su sección y tu memo — se descarga como archivo .md para Obsidian</div>
+      <div id="alist"></div>
+    </div>
+
+    <div class="foot">
+      <span>documento vivo · última revisión 2026-07-31</span>
+      <span class="doi">v0.1 · DOI 10.xxxx/estrata.1</span>
+    </div>
+  </article>
+
+  <p class="fn">Prototipo de demostración. Contenido, autoría y enlaces son ilustrativos. <a href="https://github.com/tu-usuario/Estrata" target="_blank">Ver repositorio →</a></p>
+</div>
+
+<div id="toast"></div>
+
+<script>
+(function(){
+  var pane=document.getElementById("pane"),content=document.getElementById("content"),wipe=document.getElementById("wipe"),floatBtn=document.getElementById("float");
+  var bNar=document.getElementById("b-nar"),bHer=document.getElementById("b-her"),bDat=document.getElementById("b-dat");
+  var alist=document.getElementById("alist"),acount=document.getElementById("acount"),toastEl=document.getElementById("toast");
+  var animating=false,cur="nar",pendRange=null,pendText="";
+  var reduce=window.matchMedia&&window.matchMedia("(prefers-reduced-motion:reduce)").matches;
+  var rn={nar:"c1",her:"c2",dat:"c3"},ln={nar:"narrativa",her:"hermeneutica",dat:"datos"},lnum={nar:"1",her:"2",dat:"3"};
+  var annots=[{id:1,layer:"her",quote:"No es una medición: elegí la función y el parámetro escala igual a 30 a mano.",memo:"Sustituir por datos reales de la encuesta de clase 2026, o etiquetar como esquema conceptual."}];
+  var nextId=2;
+
+  function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+  function urlOf(a){return "https://estrata.org/manual/especificidad-del-prompt?capa="+ln[a.layer]+"&parrafo=6#sel="+encodeURIComponent(a.quote.slice(0,32));}
+  function showToast(m){toastEl.textContent=m;toastEl.classList.add("on");clearTimeout(showToast._t);showToast._t=setTimeout(function(){toastEl.classList.remove("on");},2000);}
+
+  function mdOne(a){
+    var d=new Date().toISOString().slice(0,10);
+    return "---\ntitle: \"Anotación · Estrata\"\ncapa: "+ln[a.layer]+"\nparrafo: 6\nfecha: "+d+"\nfuente: "+urlOf(a)+"\ntags:\n  - estrata\n  - capa-"+a.layer+"\n---\n\n> "+a.quote+"\n\n"+(a.memo||"*(sin memo)*")+"\n\n[Ir a la sección en Estrata]("+urlOf(a)+")\n";}
+  function mdAll(){
+    var d=new Date().toISOString().slice(0,10);
+    var out="---\ntitle: \"Anotaciones · Estrata\"\nfecha: "+d+"\ntags:\n  - estrata\n  - anotaciones\n---\n\n";
+    annots.forEach(function(a){out+="## Capa "+lnum[a.layer]+" · "+ln[a.layer]+"\n\n> "+a.quote+"\n\n"+(a.memo||"*(sin memo)*")+"\n\nFuente: "+urlOf(a)+"\n\n";});
+    return out;}
+  function download(name,text){
+    var b=new Blob([text],{type:"text/markdown;charset=utf-8"}),u=URL.createObjectURL(b),a=document.createElement("a");
+    a.href=u;a.download=name;document.body.appendChild(a);a.click();document.body.removeChild(a);
+    setTimeout(function(){URL.revokeObjectURL(u);},1000);
+    try{if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(text);}catch(e){};}
+  function slugify(s){return s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9]+/g,"-").slice(0,40)||"anotacion";}
+
+  function renderAnnots(){
+    var h="";
+    annots.forEach(function(a){
+      var r=rn[a.layer],u=urlOf(a);
+      h+='<div class="acard">'+
+        '<span class="lchip" style="color:var(--'+r+'-t);background:var(--'+r+'-bg);">capa '+lnum[a.layer]+' · '+ln[a.layer]+'</span>'+
+        '<p class="aquote" style="border-left:2px solid var(--'+r+'-bd);">'+esc(a.quote)+'</p>'+
+        '<textarea data-id="'+a.id+'" placeholder="escribe tu memo aquí">'+esc(a.memo)+'</textarea>'+
+        '<div class="aurl"><svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span>'+esc(u)+'</span></div>'+
+        '<button class="btn" data-exp="'+a.id+'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M8 11l4 4 4-4"/><path d="M4 19h16"/></svg> exportar a Obsidian (.md)</button>'+
+      '</div>';
+    });
+    alist.innerHTML=h;acount.textContent=annots.length;
+  }
+
+  alist.addEventListener("input",function(e){
+    var t=e.target;if(t.tagName!=="TEXTAREA")return;
+    var id=+t.getAttribute("data-id");annots.forEach(function(a){if(a.id===id)a.memo=t.value;});
+  });
+  alist.addEventListener("click",function(e){
+    var b=e.target.closest("button[data-exp]");if(!b)return;
+    var id=+b.getAttribute("data-exp");
+    annots.forEach(function(a){if(a.id===id){download(slugify(a.quote)+".md",mdOne(a));showToast("Nota .md descargada para Obsidian");}});
+  });
+  document.getElementById("exp-all").addEventListener("click",function(){
+    download("estrata-anotaciones.md",mdAll());showToast("Todas las anotaciones exportadas");
+  });
+
+  function addAnnot(text,layer){
+    annots.push({id:nextId++,layer:layer,quote:text,memo:""});
+    renderAnnots();
+    var tas=alist.querySelectorAll("textarea");if(tas.length)tas[tas.length-1].focus();
+    showToast("Anotación creada");
+  }
+  function highlight(range,layer){
+    try{var s=document.createElement("mark");s.style.background="var(--"+rn[layer]+"-bg)";s.style.boxShadow="0 1px 0 var(--"+rn[layer]+"-t)";s.style.borderRadius="2px";range.surroundContents(s);}catch(e){}
+  }
+
+  content.addEventListener("mouseup",function(){
+    setTimeout(function(){
+      var sel=window.getSelection();
+      if(!sel||sel.isCollapsed){floatBtn.style.display="none";return;}
+      var text=sel.toString().trim();
+      if(text.length<4||!content.contains(sel.getRangeAt(0).commonAncestorContainer)){floatBtn.style.display="none";return;}
+      pendRange=sel.getRangeAt(0).cloneRange();pendText=text;
+      var rect=pendRange.getBoundingClientRect(),pr=pane.getBoundingClientRect();
+      var top=rect.top-pr.top-34;if(top<4)top=rect.bottom-pr.top+6;
+      var left=rect.left-pr.left;if(left>pr.width-86)left=pr.width-86;if(left<4)left=4;
+      floatBtn.style.left=left+"px";floatBtn.style.top=top+"px";floatBtn.style.display="block";
+    },10);
+  });
+  floatBtn.addEventListener("click",function(){
+    if(pendText){highlight(pendRange,cur);addAnnot(pendText,cur);}
+    floatBtn.style.display="none";var s=window.getSelection();if(s)s.removeAllRanges();pendText="";pendRange=null;
+  });
+  document.addEventListener("mousedown",function(e){if(e.target!==floatBtn)floatBtn.style.display="none";});
+
+  function fx(x){return 100*(1-Math.exp(-x/30));}
+  function px(x){return 30+(x/100)*278;}
+  function py(v){return 128+(v/100)*(12-128);}
+
+  function narrativa(){
+    var d="";for(var x=0;x<=100;x+=2){d+=(x===0?"M":"L")+px(x).toFixed(1)+" "+py(fx(x)).toFixed(1)+" ";}
+    content.innerHTML=
+      '<div class="eyebrow" style="color:var(--c1-t);">capa 1 · narrativa (IA con supervisión humana)</div>'+
+      '<p>En la práctica, la diferencia entre un prompt vago y uno preciso no es de grado sino de naturaleza. Un prompt vago obliga al modelo a rellenar los huecos con suposiciones que rara vez coinciden con lo que quien pregunta tenía en mente; uno preciso reduce ese margen de invención y acota la respuesta a un terreno verificable.</p>'+
+      '<p>Para hacer visible esa intuición, el siguiente control permite jugar con un modelo ilustrativo de cuánta salida resulta directamente aprovechable a medida que aumenta la especificidad.</p>'+
+      '<div class="figrow"><label>especificidad</label><input type="range" id="esp" min="0" max="100" step="1" value="40"><span class="figout" id="espout">40%</span></div>'+
+      '<svg viewBox="0 0 320 150" width="100%" style="display:block;max-width:340px;margin-bottom:4px;" role="img" aria-label="curva ilustrativa de salida aprovechable según la especificidad del prompt">'+
+        '<line x1="30" y1="128" x2="308" y2="128" stroke="var(--line-2)"/>'+
+        '<line x1="30" y1="12" x2="30" y2="128" stroke="var(--line-2)"/>'+
+        '<text x="26" y="18" text-anchor="end" font-size="9" fill="var(--ink-3)">100</text>'+
+        '<text x="26" y="131" text-anchor="end" font-size="9" fill="var(--ink-3)">0</text>'+
+        '<text x="169" y="145" text-anchor="middle" font-size="9" fill="var(--ink-3)">especificidad</text>'+
+        '<path d="'+d.trim()+'" fill="none" stroke="var(--c1-t)" stroke-width="2"/>'+
+        '<line id="rg" y1="12" y2="128" stroke="var(--ink-3)" stroke-dasharray="3"/>'+
+        '<circle id="pt" r="4.5" fill="var(--c1-t)"/>'+
+      '</svg>'+
+      '<p class="figcap">figura 1 · con <b id="le">40%</b> de especificidad, el modelo estima <b id="lv">26%</b> de salida aprovechable</p>'+
+      '<p>La figura anterior es solo eso, una figura: un apoyo visual dentro de un argumento que se sostiene, sobre todo, en palabras. El resto de esta sección desarrolla en prosa las tres condiciones que, según la experiencia docente disponible, hacen que un prompt resulte productivo para una persona sin formación técnica.</p>'+
+      '<p>La primera condición es el contexto: nombrar el propósito, el público y el formato esperado. La segunda es la restricción: decir explícitamente qué no se quiere. La tercera es la iteración: tratar la primera respuesta como un borrador negociable y no como un veredicto. Ninguna de las tres cabe en una curva, y por eso el corazón de este manual seguirá siendo el texto.</p>';
+    var esp=document.getElementById("esp"),rg=document.getElementById("rg"),pt=document.getElementById("pt");
+    function u(){var e=parseInt(esp.value,10),v=fx(e),cx=px(e),cy=py(v);
+      rg.setAttribute("x1",cx);rg.setAttribute("x2",cx);pt.setAttribute("cx",cx);pt.setAttribute("cy",cy);
+      document.getElementById("espout").textContent=e+"%";document.getElementById("le").textContent=e+"%";document.getElementById("lv").textContent=Math.round(v)+"%";}
+    esp.addEventListener("input",u);u();
+  }
+
+  function hermeneutica(){
+    content.innerHTML=
+      '<div class="eyebrow" style="color:var(--c2-t);">capa 2 · hermenéutica humana</div>'+
+      '<p>Lo que la máquina no dice. La curva que aparece en la capa narrativa se ve convincente, y ese es precisamente el peligro que quiero señalar aquí. No es una medición: elegí la función exponencial y el parámetro escala igual a 30 a mano, porque parecían razonables, no porque exista un conjunto de datos que los respalde.</p>'+
+      '<p>En mi experiencia dando clase, el retrabajo no disminuye siguiendo una curva suave. Baja a saltos: hay un umbral por debajo del cual el prompt es tan vago que la salida resulta inservible, y a partir de cierto punto el exceso de detalle deja de ayudar y empieza a encorsetar al modelo. Una gráfica limpia esconde esos codos, y un lector apurado podría tomarla por un hallazgo empírico cuando no lo es.</p>'+
+      '<p>Decidí conservar la figura, con esta advertencia al lado, en lugar de borrarla. Enseñar a desconfiar de una visualización atractiva es parte del temario: quien aprende a trabajar con inteligencia artificial necesita distinguir entre lo que un gráfico demuestra y lo que solo insinúa. Selecciona esta reflexión y anótala para ver cómo funciona el sistema de anotación.</p>';
+  }
+
+  function datos(){
+    content.innerHTML=
+      '<div class="eyebrow" style="color:var(--c3-t);">capa 3 · datos y código</div>'+
+      '<p>En esta capa expongo todo lo que sostiene la figura de la capa narrativa. El dato aquí no es empírico: lo que se abre no es una tabla de observaciones, sino el conjunto de supuestos de un modelo ilustrativo. Ser explícita sobre esa diferencia es la forma de honestidad que esta capa exige.</p>'+
+      '<pre>def aprovechable(esp, escala=30):\n    return 100 * (1 - exp(-esp / escala))\n\n# escala = 30   parámetro elegido a mano, no ajustado\n# esp: 0 a 100  proxy cualitativo, no métrica real</pre>'+
+      '<p>Cualquier lectora puede tomar este fragmento, cambiar el valor de la escala y comprobar cómo se desplaza la curva. Esa posibilidad de manipular el supuesto, y no solo leerlo, es lo que distingue a una publicación en capas de un artículo tradicional: el aparato metodológico deja de ser una caja negra y se convierte en un objeto con el que se puede experimentar.</p>'+
+      '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px;">'+
+        '<span style="font-size:11px;color:var(--c3-t);background:var(--c3-bg);border-radius:var(--radius);padding:4px 10px;">supuestos.csv</span>'+
+        '<button class="btn" id="nb">abrir notebook ↗</button>'+
+      '</div>';
+    var nb=document.getElementById("nb");
+    if(nb)nb.addEventListener("click",function(){showToast("En la versión completa, esto abre el notebook Jupyter");});
+  }
+
+  var conf={
+    nar:{render:narrativa,btn:bNar},
+    her:{render:hermeneutica,btn:bHer},
+    dat:{render:datos,btn:bDat}
+  };
+  function resetBtn(b){b.style.background="transparent";b.style.borderColor="var(--line)";b.style.color="var(--ink-2)";b.setAttribute("aria-selected","false");}
+  function markBtn(k){resetBtn(bNar);resetBtn(bHer);resetBtn(bDat);
+    var r=rn[k],b=conf[k].btn;
+    b.style.background="var(--"+r+"-bg)";b.style.borderColor="var(--"+r+"-bd)";b.style.color="var(--"+r+"-t)";b.setAttribute("aria-selected","true");}
+  function paint(k){var r=rn[k];pane.style.background="var(--"+r+"-bg)";pane.style.borderTop="3px solid var(--"+r+"-bd)";}
+
+  function go(k){
+    if(animating)return;cur=k;floatBtn.style.display="none";markBtn(k);
+    if(reduce){conf[k].render();paint(k);return;}
+    animating=true;var r=rn[k];
+    wipe.style.transition="none";wipe.style.background="var(--"+r+"-bd)";wipe.style.transform="translateX(-101%)";
+    void wipe.offsetWidth;
+    wipe.style.transition="transform .75s ease";
+    requestAnimationFrame(function(){wipe.style.transform="translateX(101%)";});
+    setTimeout(function(){conf[k].render();paint(k);},360);
+    setTimeout(function(){wipe.style.transition="none";wipe.style.transform="translateX(-101%)";animating=false;},780);
+  }
+  bNar.addEventListener("click",function(){go("nar");});
+  bHer.addEventListener("click",function(){go("her");});
+  bDat.addEventListener("click",function(){go("dat");});
+
+  markBtn("nar");narrativa();renderAnnots();
+})();
+</script>
+</body>
+</html>
