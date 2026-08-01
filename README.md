@@ -80,6 +80,11 @@ No requiere instalación. Es un archivo HTML autónomo que funciona sin internet
 5. Escribe tu memo en la tarjeta del panel de anotaciones.
 6. Pulsa "exportar a Obsidian" para descargar un archivo `.md` listo para arrastrar a tu bóveda.
 
+<img width="447" height="764" alt="Captura de pantalla 2026-07-31 a la(s) 6 17 35 p m" src="https://github.com/user-attachments/assets/3b8e8dfb-d4d6-4ed2-a042-c6156043e943" />
+
+[**clic aquí **](https://claude.ai/public/artifacts/99928d7d-07d5-4b40-a62c-9a0bf131d92e)
+
+
 ---
 
 ## Estructura del repositorio
