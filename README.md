@@ -7,9 +7,24 @@
 
 ## Qué es Estrata
 
-Estrata es un proyecto experimental de autopublicación digital dirigido a estudiantes, docentes e investigadores de las ciencias sociales y las humanidades. Su propósito es explorar formas de publicación académica que no reproduzcan únicamente la estructura lineal y cerrada del libro impreso, sino que integren diferentes modos de lectura, interpretación y producción de conocimiento dentro de una misma obra digital.
+Estrata es un blog personal donde experimento con formas de escritura académica que no caben en el artículo tradicional. No es una plataforma de servicio ni una revista: es un espacio propio de ensayo, donde cada entrada funciona a la vez como texto y como prueba de un formato.
+
+El punto de partida es una incomodidad. La escritura académica que heredamos supone un lector que avanza en línea recta hasta la conclusión, un autor que borra sus dudas antes de publicar y un aparato de datos que se archiva como apéndice o desaparece. Ese formato ya no describe cómo trabajamos. Escribimos con herramientas que sugieren, resumen y proponen; leemos saltando entre pestañas; verificamos mientras redactamos. La colaboración humano-máquina ya está ocurriendo, pero el formato la obliga a permanecer invisible, como si admitirla ensuciara el resultado.
+
+Estrata hace lo contrario: vuelve visible esa colaboración y la organiza en capas. Cada capa exige una operación cognitiva distinta (seguir un argumento, sospechar de él, inspeccionar sus materiales) y las tres juntas explican mejor cómo se construye una afirmación que cualquiera de ellas por separado.
+
+Su pregunta central es: ¿qué formas de producción, lectura e interpretación del conocimiento se vuelven posibles cuando una publicación académica deja de ser un objeto cerrado y se convierte en una arquitectura explorable de textos, interpretaciones y datos?
 
 La propuesta retoma el principio de publicación multicapa desarrollado por el [Journal of Digital History](https://journalofdigitalhistory.org), cuyas publicaciones articulan narrativa académica, reflexión metodológica y materiales documentales o computacionales. Estrata adapta este modelo a un entorno de escritura asistida por inteligencia artificial y propone tres capas complementarias.
+
+## El software como posición
+
+Estrata continúa una línea de trabajo que empecé con Biblio-retratos, una aplicación web que conecta al usuario con su base bibliográfica en Zotero para producir analíticas y visualizaciones de sus prácticas de literacidad. Ahí el argumento estaba en el propio artefacto: frente a una gestión de la productividad académica que reduce la identidad a lo que se publica, Biblio-retratos propone mirar lo que se lee, se recolecta y se elige potencialmente leer. Las pertenencias, disposiciones y fronteras teórico-metodológicas que se sedimentan en una base bibliográfica son también identidad académica, aunque ningún sistema de evaluación las contabilice.
+
+Estrata opera con la misma lógica. No escribe sobre el problema de la escritura académica: lo pone en el código. Escribir el software es aquí una forma de argumentar, y el artefacto digital encierra un posicionamiento que un texto convencional solo podría enunciar.
+
+Lo que Estrata pone en discusión es la autoría. Si la inteligencia artificial participa en la producción de un texto académico, hay tres salidas posibles: negarlo, prohibirlo o documentarlo. Estrata elige documentarlo, y elige hacerlo de manera provocadora, mostrando en la superficie del texto lo que otros formatos esconden en una nota metodológica. La capa hermenéutica existe justamente para eso: para que quede constancia de dónde la máquina simplificó, dónde la autora desconfió y por qué decidió publicar de todos modos.
+
 
 ### Las tres capas
 
