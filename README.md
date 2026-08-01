@@ -37,7 +37,7 @@ El proyecto será desarrollado mediante vibe coding, entendido aquí no como una
 
 ## Estado actual del proyecto
 
-Este repositorio contiene el **prototipo navegable v0.1**](https://claude.ai/public/artifacts/99928d7d-07d5-4b40-a62c-9a0bf131d92e)de Estrata: un único archivo HTML autónomo que demuestra las funciones centrales de la propuesta.
+Este repositorio contiene el [**prototipo navegable v0.1**](https://tmarquez-mx.github.io/Estrata/) de Estrata: un único archivo HTML autónomo que demuestra las funciones centrales de la propuesta.
 
 El prototipo es una prueba de concepto para presentar la idea, reunir equipo y conseguir recursos para una implementación robusta. No es el producto final.
 
@@ -81,7 +81,7 @@ Es un archivo HTML autónomo que funciona sin internet y sin dependencias extern
 
 <img width="447" height="764" alt="Captura de pantalla 2026-07-31 a la(s) 6 17 35 p m" src="https://github.com/user-attachments/assets/3b8e8dfb-d4d6-4ed2-a042-c6156043e943" />
 
-[**clic aquí **](https://claude.ai/public/artifacts/99928d7d-07d5-4b40-a62c-9a0bf131d92e)
+[**clic aquí **](https://tmarquez-mx.github.io/Estrata/)
 
 
 ---
