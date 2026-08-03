@@ -1,7 +1,11 @@
 
-# Estrata — publicación académica en capas
+# Estrata — Escritura académica en capas
 
-> Prototipo experimental de autopublicación digital multicapa para ciencias sociales y humanidades.
+> Prototipo experimental de un blog digital multicapa para ciencias sociales y humanidades.
+
+[Portada] <img width="1024" height="1536" alt="portada-estrata" src="https://github.com/user-attachments/assets/b1f70609-31c1-436f-a6d6-e8e0733859fd" />
+
+
 
 ---
 
@@ -155,6 +159,10 @@ Si te interesa participar, abre un issue describiendo tu perfil y área de inter
 - Darnton, R. (1999). "The new age of the book". *The New York Review of Books*.
 - Knowledge Futures / PubPub: plataforma de publicación open source — https://pubpub.org
 - Zenodo: repositorio abierto con DOI versionados — https://zenodo.org
+
+[Contraportada]< img width="1024" height="1536" alt="contraportada-estrata" src="https://github.com/user-attachments/assets/2bc6b9c1-0c7e-4285-a609-6d7232a503d8" />
+
+
 
 ---
 
