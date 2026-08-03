@@ -160,7 +160,7 @@ Si te interesa participar, abre un issue describiendo tu perfil y área de inter
 - Knowledge Futures / PubPub: plataforma de publicación open source — https://pubpub.org
 - Zenodo: repositorio abierto con DOI versionados — https://zenodo.org
 
-[Contraportada]< img width="1024" height="1536" alt="contraportada-estrata" src="https://github.com/user-attachments/assets/2bc6b9c1-0c7e-4285-a609-6d7232a503d8" />
+[Contraportada]<img width="1024" height="1536" alt="contraportada-estrata" src="https://github.com/user-attachments/assets/2bc6b9c1-0c7e-4285-a609-6d7232a503d8" />
 
 
 
